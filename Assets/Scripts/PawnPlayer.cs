@@ -19,7 +19,7 @@ public class PawnPlayer : Pawn
     {
         characterController = GetComponent<CharacterController>();     // get handle to characterController
         gameObject.tag = "Player";
-        lookdirection = gameObject.transform.right;
+        lookdirection = gameObject.transform.forward;
         //healthcomponent = GetComponent<Health>();
     }
 
