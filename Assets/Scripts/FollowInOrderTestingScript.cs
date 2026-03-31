@@ -36,7 +36,7 @@ public class FollowInOrderTestingScript : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         //agent.SetDestination(target.position);
-        agent.enabled = false;
+        //////agent.enabled = false;
         FormationHandler = GameObject.Find("FormationHandlerTesting");
         overridemajororder = 0;
         //closestone = false;
@@ -59,7 +59,7 @@ public class FollowInOrderTestingScript : MonoBehaviour
         */
         if (gameObject.tag == "FormationGroupMain")
         {
-            agent.enabled = true;
+            //////agent.enabled = true;
             //agent.SetDestination(target.position);
         }
 
@@ -72,7 +72,7 @@ public class FollowInOrderTestingScript : MonoBehaviour
         float xdistance = Mathf.Abs(transform.position.x - target.position.x);
         float zdistance = Mathf.Abs(transform.position.z - target.position.z);
         float cdistance = Mathf.Pow(xdistance, 2) + Mathf.Pow(zdistance, 2);
-
+        /*
         if (FormationHandler.GetComponent<SpiritFormationhandler>().GetMajorOrder() == 1)
         {
             if (gameObject.tag == "FormationGroupMain")
@@ -95,9 +95,34 @@ public class FollowInOrderTestingScript : MonoBehaviour
                 agent.enabled = true;
             }
         }
+        */
         if (agent.enabled)
         {
-            agent.SetDestination(target.position);
+            if (agent.isOnOffMeshLink)
+            {
+                OffMeshLinkData data = agent.currentOffMeshLinkData;
+
+                //calculate the final point of the link
+                Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+
+                //Move the agent to the end point
+                agent.transform.position = Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
+
+                //when the agent reach the end point you should tell it, and the agent will "exit" the link and work normally after that
+                if (agent.transform.position == endPos)
+                {
+                    agent.CompleteOffMeshLink();
+                }
+            }
+            else
+            {
+                agent.SetDestination(target.position);
+            }
+            if (gameObject.tag == "FormationGroup")
+            {
+                //print(gameObject.name + " has stopped");
+                transform.localRotation = Quaternion.identity;
+            }
             if (Mathf.Sqrt(cdistance) <= stoppingdistance)
             {
                 //foreach (GameObject g in SpiritFormations)
@@ -105,6 +130,16 @@ public class FollowInOrderTestingScript : MonoBehaviour
                     //g.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
                 }
                 agent.isStopped = true;
+                if (gameObject.tag == "FormationGroupMain")
+                {
+                    agent.updatePosition = false;
+                }
+                //print(gameObject.name + " has stopped");
+                if (gameObject.tag == "FormationGroup")
+                {
+                    //print(gameObject.name + " has stopped");
+                    //transform.rotation = Quaternion.identity;
+                }
             }
             else if (agent.isStopped && Mathf.Sqrt(cdistance) > stoppingdistance)
             {
@@ -113,6 +148,16 @@ public class FollowInOrderTestingScript : MonoBehaviour
                     //g.gameObject.GetComponent<NavMeshAgent>().isStopped = false;
                 }
                 agent.isStopped = false;
+                if (gameObject.tag == "FormationGroupMain")
+                {
+                    agent.updatePosition = true;
+                }
+                //print(gameObject.name + " has begun moving");
+                if (gameObject.tag == "FormationGroup")
+                {
+                    //print(gameObject.name + " has begun moving");
+                    //transform.localRotation = Quaternion.identity;
+                }
             }
         }
         /*
