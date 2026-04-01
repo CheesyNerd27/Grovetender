@@ -770,6 +770,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerPlayer
   pawnobject: {fileID: 257225527}
+  uiForInv: {fileID: 0}
+  itemSelect: 0
 --- !u!4 &702301749
 Transform:
   m_ObjectHideFlags: 0
