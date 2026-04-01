@@ -29,19 +29,19 @@ public class ControllerPlayer : Controller
 
         if (Input.GetKey(KeyCode.W))
         {
-            pawnobject.Move(pawnobject.transform.up);
+            pawnobject.Move(transform.forward);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            pawnobject.Move(-pawnobject.transform.up);
+            pawnobject.Move(-transform.forward);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            pawnobject.Move(-pawnobject.transform.right);
+            pawnobject.Move(-transform.right);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            pawnobject.Move(pawnobject.transform.right);
+            pawnobject.Move(transform.right);
         }
     }
 }
