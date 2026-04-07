@@ -8,21 +8,21 @@ public class GridSystem : MonoBehaviour
     public static GridSystem g;
     static Plane gridPlane;
     [SerializeField]
-    private float setSizeOfGrid = 1;
-    public float radiusOfTiles;
+    private float setSizeOfHex = 1;
+    public int tileMapSize = 15;
     public GameObject gridTile;
     void Awake()
     {
         g = this;
-        size = setSizeOfGrid;
+        size = setSizeOfHex;
         gridPlane = new Plane(transform.up, transform.position);
         MakeGrid();
     }
     public void MakeGrid()// This is mostly for testing
     {
-        for (int x = -10; x < 11; x++)
+        for (int x = -tileMapSize; x < tileMapSize + 1; x++)
         {
-            for(int y = -10; y < 11; y++)
+            for(int y = -tileMapSize; y < tileMapSize + 1; y++)
             {
                 GameObject h = Instantiate(gridTile, PositionFromCoord(x, y), 
                     Quaternion.LookRotation(-Vector3.up, Vector3.right), transform);
