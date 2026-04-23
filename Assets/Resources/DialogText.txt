@@ -1,0 +1,35 @@
+{
+	"dialog": [
+		{
+			"id": 0,
+			"npc": "SampleNPC",
+			"text": "Hi! I'm the first NPC, talking from the JSON file.",
+			"portrait": "Image #1"
+		},
+		{
+			"id": 1,
+			"npc": "SampleNPC2",
+			"text": "Hi! I'm the second NPC, talking from the JSON file.",
+			"portrait": "Image #2"
+		},
+		{
+			"id": 2,
+			"npc": "SampleNPC",
+			"text": "Hi! Me again, talking from the JSON file.",
+			"portrait": "Image #3"
+		}
+	]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
