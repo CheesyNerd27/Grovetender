@@ -62,6 +62,11 @@ public class FollowInOrderTestingScript : MonoBehaviour
             //////agent.enabled = true;
             //agent.SetDestination(target.position);
         }
+       
+        if (gameObject.tag == "FormationGroup")
+        {
+            refigurebounds();
+        }
 
     }
 
@@ -191,5 +196,35 @@ public class FollowInOrderTestingScript : MonoBehaviour
     {
         return (SpiritFormations);
     }
+
+    //////////////////////////////////////////////////////////////////testing for group creation - dexter
+    public void refigurebounds()
+    {
+        BoxCollider parentCollider = GetComponent<BoxCollider>();
+        Renderer[] childRenderers = GetComponentsInChildren<Renderer>();
+        if (childRenderers.Length == 0) return;
+
+        // Initialize bounds with the first child
+        Bounds combinedBounds = childRenderers[0].bounds;
+
+        // Expand bounds to include all other children
+        foreach (Renderer renderer in childRenderers)
+        {
+            combinedBounds.Encapsulate(renderer.bounds);
+        }
+
+        // Apply to Parent Collider (local space conversion)
+        parentCollider.center = transform.InverseTransformPoint(combinedBounds.center);
+        parentCollider.size = Vector3.Scale(combinedBounds.size, new Vector3(
+            1 / transform.lossyScale.x,
+            1 / transform.lossyScale.y,
+            1 / transform.lossyScale.z
+        ));
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////////
 
 }

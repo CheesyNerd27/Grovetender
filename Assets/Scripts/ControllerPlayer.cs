@@ -19,7 +19,8 @@ public class ControllerPlayer : Controller
     public int itemSelect;
 
 
-
+    public bool hasenabledgrouptesting = false;
+    public GameObject objreference = null;
 
     //////////////////////////////////////////
 
@@ -124,10 +125,66 @@ public class ControllerPlayer : Controller
             }
 
         }
-       
+
 
 
 
         /////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+        ////////////////////////////////////////////////////////testing demo for group greation - dexter (if conflicts you can delete this)
+        if (Input.GetKeyDown(KeyCode.Slash))
+        {
+            hasenabledgrouptesting = !hasenabledgrouptesting;
+        }
+        if (hasenabledgrouptesting)
+        {
+            //print("pressed");
+           
+            if (Input.GetMouseButton(0))
+            {
+                //print("holding");
+                // Create a ray from the camera through the mouse position
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit; // Variable to store information about what the ray hit
+
+                if (objreference == null)
+                {
+                    // Perform the raycast
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.transform.gameObject.tag == "Collectable")
+                        {
+                            objreference = hit.transform.gameObject;
+                        }
+                    }
+                }
+                if (objreference != null)
+                {
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.transform.gameObject.tag != "Collectable")
+                        {
+                            Vector3 testingPosition = hit.point;
+                            if (hit.transform.gameObject.tag != "FormationGroup")
+                            {
+                                testingPosition.y += 1f;
+                            }
+                            objreference.transform.position = testingPosition;
+                        }
+                    }
+                }
+            }
+            
+        }
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////
     }
 }
